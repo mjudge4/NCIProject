@@ -3,24 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/offerings.js') }}"></script>
     <title>BabiesGrow</title>
+    <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+
+    /* Remove the jumbotron's default bottom margin */
+     .jumbotron {
+      margin-bottom: 0;
+    }
+
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+    .panel-body img {
+        height : 450px
+    }
+  </style>
 </head>
 
 
-{% include "header.html" %}
+
 <body>
-<header class="header">
-      <div class="header__inner">
-        <h1 class="header__title">
-          BabiesGrow
-        </h1>
-      </div>
-    </header>
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>BabiesGrow</h1>
+    <p>Reduce, Reuse, Recycle</p>
+  </div>
+</div>
+{% include "header.html" %}
+
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
+        <div class="alert alert-success">
          <ul>
             {% for message in messages %}
                 <li><strong>{{ message }}</strong></li>
@@ -28,29 +53,48 @@
          </ul>
         {% endif %}
     {% endwith %}
-
+    </div>
 
     <main>
-    <button class = "button">
-    <a href = '{{url_for('newOffering') }}'>Add New Offering</a>
-    </button>
+    <div class="panel panel-default">
+    <a href = '{{url_for('newOffering') }}' class="btn btn-primary btn-block" role="button">Add New Offering</a>
+    </div>
 
-    <div class = offering_container>
+<div class="container">
+
+  <div class="row">
     {% for i in offerings %}
-        <div class = offering_list>
-        <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
-            <h3>{{i.title}}</h3></br></a>
-        <p>{{i.date}}</p>
-        {% for file in files %}
-            {% if i.id == file.offering_id %}
-                <img src ="{{file.image}}">
-            {% endif %}
-        {% endfor %}
+    <div class ="col-sm-4">
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+
+                {{i.title}}</a>
+            </div>
+            <div class="panel-footer">{{i.date}}</div>
+            <div class="panel-body">
+            {% for file in files %}
+                {% if i.id == file.offering_id %}
+                    <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
+                        <img src ="{{file.image}}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
+                    </a>
+                {% endif %}
+            {% endfor %}
+            </div>
+            <div class="panel-footer">{{i.location}}</div>
 
         </div>
-    {% endfor %}
-
     </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+
+
+
+
 
 
     </main>
