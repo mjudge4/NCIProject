@@ -37,6 +37,7 @@ APPLICATION_NAME = "BabiesGrow"
 
 app = Flask(__name__)
 
+
 engine = create_engine('mysql://root:password@localhost/replay')
 
 Base.metadata.bind = engine
@@ -171,7 +172,7 @@ def uploaded_file(offering_id, file_id):
     tags = response.label_annotations
 
     for tag in tags:
-        newTag = Tag(tag_name=str(tag.description), offering_id=offering.id)
+        newTag = Tag(tag_name=tag.description, offering_id=offering.id)
         session.add(newTag)
         session.commit()
 

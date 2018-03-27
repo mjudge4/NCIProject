@@ -44,6 +44,9 @@ class Offering(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
     files = relationship('File', passive_deletes=True)
+    tag = relationship('Tag')
+    comment = relationship('Comment')
+
 
 
     @property
@@ -65,7 +68,8 @@ class Tag(Base):
     id = Column(Integer, primary_key=True)
     tag_name = Column(String(300), nullable=False)
     offering_id = Column(Integer, ForeignKey('offering.id'), nullable=True)
-    offering = relationship(Offering)
+
+
 
     @property
     def serialize(self):
@@ -82,7 +86,7 @@ class Comment(Base):
 
     id = Column(Integer, primary_key=True)
     body = Column(String(1000), nullable=False)
-    offering_id = Column(Integer, ForeignKey('offering.id'))
+    offering_id = Column(Integer, ForeignKey('offering.id'), nullable=True)
     offering = relationship(Offering)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
