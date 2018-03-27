@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/offerings.js') }}"></script>
+    <title>BabiesGrow</title>
+</head>
+
+
+{% include "header.html" %}
+<body>
+<header class="header">
+      <div class="header__inner">
+        <h1 class="header__title">
+          BabiesGrow
+        </h1>
+      </div>
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+         <ul>
+            {% for message in messages %}
+                <li><strong>{{ message }}</strong></li>
+            {% endfor %}
+         </ul>
+        {% endif %}
+    {% endwith %}
+
+
+    <main>
+    <button class = "button">
+    <a href = '{{url_for('newOffering') }}'>Add New Offering</a>
+    </button>
+
+    <div class = offering_container>
+    {% for i in offerings %}
+        <div class = offering_list>
+        <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
+            <h3>{{i.title}}</h3></br></a>
+        <p>{{i.date}}</p>
+        {% for file in files %}
+            {% if i.id == file.offering_id %}
+                <img src ="{{file.image}}">
+            {% endif %}
+        {% endfor %}
+
+        </div>
+    {% endfor %}
+
+    </div>
+
+
+    </main>
+
+
+</body>
+</html>

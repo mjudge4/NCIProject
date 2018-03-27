@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Labels:
+</br>
+    {% for tag in tags %}
+        {{ tag.description }}</br>
+    {% endfor %}
+
+<a href="{{url_for('offeringDetail', offering_id = offering_id)}}"> <h3>View Offering</br></a>
+</body>
+</html>
+
