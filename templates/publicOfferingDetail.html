@@ -3,6 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Offering Detail</title>
 </head>
@@ -12,6 +14,8 @@
     <img src="{{ owner.picture}}">
     <figcaption>{{ owner.name }}</figcaption>
 </figure>
+
+
 </div>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -23,50 +27,57 @@
         {% endif %}
     {% endwith %}
 <main>
-  <div class = detail>
-  <h1>{{offering.title}}</h1>
 
-
-
+<div class="container">
+  <div class = "row">
+   <div class="col-sm-8">
+    <h1>{{offering.title}}</h1>
     <h3>Date Added: {{offering.date}}</br></h3>
-  </div>
+
         Images:
         {% for x in files %}
         <img src ="{{ x.image}}"/></br></h5>
         {% endfor %}
 
-        {% for tag in tags %}
-            {{ tag.tag_name}}</br>
-        {% endfor %}
-
-
 	</div>
 
-    </br>
-        </br>
-        </br>
 
-    <div class = comments>
-
+    <div class="col-sm-4">
+        <div class="well">
         <h4>Comments:</h4>
-
+        <ul class="list-group">
         {% for j in comments %}
-            <h5>{{j.body}}</br></h5>
-            <h4>{{ j.user.name}}</h4>
+
+            <li class="list-group-item"><h6>{{ j.user.name}}</h6>
+            <img src="{{ j.user.picture}}" class="img-circle" height="50" width="50" alt="Avatar">
+            <li class="list-group-item list-group-item-light">
+            <p>{{j.body}}</br></p>
+            </li>
+            </li>
         {% endfor %}
-    </br>
-    </div>
+        </ul>
+        </div>
 
-    <div class="comment_box">
+
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1"> Add Comment:</label>
         <form id="myForm" action="#" method="post">
-            Comment:
-            </br>
-            <textarea name="body"></textarea>
-            </br>
-            <input type="submit" value="Submit Comment" />
-        </form>
-    </div>
 
+            </br>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </br>
+            <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i>Submit</button>
+        </form>
+        </div>
+    </div>
+  </div>
+
+
+    {% for tag in tags %}
+        <button type="button" class="btn btn-info">{{ tag.tag_name}}</button>
+    {% endfor %}
+
+</div>
 
     </br>
     <a href='{{url_for('offering')}}'>Back</a>

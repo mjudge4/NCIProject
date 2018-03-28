@@ -28,6 +28,10 @@
     .panel-body img {
         height : 450px
     }
+
+    a {
+        color: white;
+    }
   </style>
 </head>
 
@@ -69,10 +73,9 @@
         <div class="panel panel-primary">
 
             <div class="panel-heading">
-
-                {{i.title}}</a>
+                <a href="{{url_for('offeringDetail', offering_id = i.id)}}"> {{i.title}}</a>
             </div>
-            <div class="panel-footer">{{i.date}}</div>
+            <div class="panel-footer"> Posted: {{i.date}}</div>
             <div class="panel-body">
             {% for file in files %}
                 {% if i.id == file.offering_id %}
