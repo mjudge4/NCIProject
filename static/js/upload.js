@@ -9,6 +9,7 @@ $(document).ready(function() {
         $.ajax({
             xhr : function() {
                 var xhr = new window.XMLHttpRequest();
+
                 xhr.upload.addEventListener('progress', function(e) {
 
                     if (e.lengthComputable) {
@@ -16,9 +17,9 @@ $(document).ready(function() {
                         console.log('Total Size: ' + e.total);
                         console.log('Percentage Uploaded: ' + (e.loaded / e.total))
 
-                        var percent = Math.round((e.loaded / e.total)*100)
+                        var percent = Math.round((e.loaded / e.total)*100);
 
-                        $('#progress-bar progress-bar-striped active').attr('aria-valuenow', percent).css('width', percent + '%').text('width', percent + '%');
+                        $('#progress-bar').attr('aria-valuenow', percent).css('width', percent + '%').text('width', percent + '%');
                     }
 
                 });
@@ -27,7 +28,6 @@ $(document).ready(function() {
 
             },
             type : 'POST',
-            url : '/uploads',
             data : formData,
             processData : false,
             contentType : false,

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/offerings.js') }}"></script>
@@ -77,7 +77,11 @@
             {% for file in files %}
                 {% if i.id == file.offering_id %}
                     <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
-                        <img src ="{{file.image}}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
+                        {% if file.image is none %}
+                            <img src ="{{ url_for('static', filename="No_Image_Available.jpg") }}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
+                        {% else %}
+                            <img src ="{{file.image}}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
+                        {% endif %}
                     </a>
                 {% endif %}
             {% endfor %}
