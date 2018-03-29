@@ -4,15 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Offering Detail</title>
 </head>
+
 <body>
 <div class="row banner menu">
 <figure class="owner">
-				<img src="{{ owner.picture}}">
-				<figcaption>{{ owner.name }}</figcaption>
+    <img src="{{ owner.picture}}">
+    <figcaption>{{ owner.name }}</figcaption>
 </figure>
 </div>
+​<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{{url_for('offering')}}">Show All Offerings</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+      <li>
+        {%if 'username' not in session %}
+            <a href="{{url_for('showLogin')}}">Click Here to Login </a>
+			{% else %}
+			<a href="{{url_for('disconnect')}}">Logout </a>
+        {% endif %}
+      </li>
+      </ul>
+
+
+    </div>
+    </div>
+</nav>
+
+    <div class="alert alert-success">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
          <ul>
@@ -22,32 +47,59 @@
          </ul>
         {% endif %}
     {% endwith %}
-
+    </div>
 
 
 <main>
-  <div class = detail>
+  <div class="container">
+    <div class = "row">
+        <div class="col-sm-8">
 
-    <h1>{{offering.title}}</h1>
-    <a href='{{ url_for('editOffering', offering_id = offering.id) }}'>Edit</a>
+        <h1>{{offering.title}}</h1>
+            <a href='{{ url_for('editOffering', offering_id = offering.id) }}'>Edit</a>
         </br>
-        <a href='{{ url_for('deleteOffering', offering_id = offering.id) }}'>Delete</a>
+            <a href='{{ url_for('deleteOffering', offering_id = offering.id) }}'>Delete</a>
         </br>
-        <h3>{{offering.date}}</br></h3>
+            <h3>{{offering.date}}</br></h3>
 
-	</div>
+            Images:
+            {% for x in files %}
+                <img src ="{{ x.image}}"/></br></h5>
+                <a href='{{ url_for('deleteFile', offering_id = offering.id, file_id=x.id) }}'>Remove Image</a>
+            {% endfor %}
+        </div>
 
+        <div class="col-sm-4">
+            <div class="well">
+            <h4>Comments:</h4>
+            <ul class="list-group">
+            {% for j in comments %}
 
-        Images:
-        {% for x in files %}
-        <img src ="{{ x.image}}"/></br></h5>
-        <a href='{{ url_for('deleteFile', offering_id = offering.id, file_id=x.id) }}'>Remove Image</a>
+                <li class="list-group-item"><h6>{{ j.user.name}}</h6>
+                <img src="{{ j.user.picture}}" class="img-circle" height="50" width="50" alt="Avatar">
+                <li class="list-group-item list-group-item-light">
+                <p>{{j.body}}</br></p>
+                </li>
+                </li>
+            {% endfor %}
+            </ul>
+            </div>
 
-        {% endfor %}
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1"> Add Comment:</label>
+            <form id="myForm" action="#" method="post">
 
+                </br>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </br>
+                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i>Submit</button>
+            </form>
+        </div>
+    </div>
+  </div>
 
         {% for i in tags %}
-        <button class = "button">
+        <button type="button" class="btn btn-info">
 
            <a href="{{ url_for('deleteTag', offering_id = offering.id, tag_id=i.id) }}"<span>{{i.tag_name}}</span></a>
 
@@ -56,39 +108,12 @@
 
         <a href='{{url_for('newTag', offering_id = offering.id)}}'>Add New Tag</a>
 
-        </br>
-        </br>
-        </br>
 
-
-        <div class = comments>
-
-        <h4>Comments:</h4>
-
-        {% for j in comments %}
-            <h5>{{j.body}}</br></h5>
-            <h4>{{ j.user.name}}</h4>
-        {% endfor %}
-        </br>
-        </div>
-
-        <div class="comment_box">
-        <form id="myForm" action="#" method="post">
-            Comment:
-            </br>
-            <textarea name="body"></textarea>
-            </br>
-            <input type="submit" value="Submit Comment" />
-        </form>
-        </div>
-</main>
-
-
-
-
+</div>
+</br>
     <a href='{{url_for('offering')}}'>Back</a>
 
-
+</main>
 
 </body>
 </html>
