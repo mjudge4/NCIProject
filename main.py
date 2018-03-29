@@ -141,7 +141,7 @@ def newOffering():
         return render_template('newoffering.html')
 
 # Routed to image upload. Image will retrive the cloud storage url and save it to file object
-@app.route('/offerings/new/<int:offering_id>/', methods=['GET', 'POST'])
+@app.route('/offerings/<int:offering_id>/new', methods=['GET', 'POST'])
 def load_file(offering_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -158,7 +158,7 @@ def load_file(offering_id):
 
 # Calling the Vision API on uploaded image and saving the labels recognised as tags
 # https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/vision/cloud-client/detect/detect.py
-@app.route('/offerings/new/<int:offering_id>/upload/<int:file_id>')
+@app.route('/offerings/<int:offering_id>/new/file/<int:file_id>')
 def uploaded_file(offering_id, file_id):
 
     offering = session.query(Offering).filter_by(id=offering_id).one()
@@ -181,7 +181,7 @@ def uploaded_file(offering_id, file_id):
 
 # http://flask.pocoo.org/docs/0.12/patterns/fileuploads/
 # Return uploaded file code from Flask docs
-@app.route('/offerings/new/<int:offering_id>/upload/<int:file_id>/tags')
+@app.route('/offerings/<int:offering_id>/new/file/<int:file_id>/tags')
 def uploadedfile(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)

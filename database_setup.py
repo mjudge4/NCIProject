@@ -68,7 +68,7 @@ class Tag(Base):
     id = Column(Integer, primary_key=True)
     tag_name = Column(String(300), nullable=False)
     offering_id = Column(Integer, ForeignKey('offering.id'), nullable=True)
-
+    offering = relationship(Offering)
 
 
     @property
