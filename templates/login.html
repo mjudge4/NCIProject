@@ -1,7 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -11,11 +16,22 @@
 
 </head>
 
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>BabiesGrow</h1>
+    <p>Reduce, Reuse, Recycle</p>
+  </div>
+</div>
 
-<body>
 
+<body class="container">
+
+<div class="row justify-content-center align-items-center">
+    <div class="row">
+    <div class="col">
 <!-- GOOGLE PLUS SIGN IN-->
-          <div id="signinButton">
+
+          <div id="signinButton" class="offset6"">
           <span class="g-signin"
             data-scope="openid email"
             data-clientid="585988940161-glf382elu22pvr84d1ss7j1p1fg76ltp.apps.googleusercontent.com"
@@ -26,6 +42,8 @@
             data-approvalprompt="force">
           </span>
         </div>
+        </div>
+
 
 <div id="result"></div>
 
@@ -58,9 +76,12 @@ function signInCallback(authResult) {
 
   }); } }
 </script>
+
 <!--END GOOGLE PLUS SIGN IN -->
 
+
 <!--Facebook SIGN IN -->
+
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -115,19 +136,20 @@ function signInCallback(authResult) {
 
 </script>
 
-<button>
 
 
-          <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
-<a href='javascript:sendTokenToServer()'>Login with Facebook</a>
+<div class="col">
 
-</fb:login-button>
+          <fb:login-button class="btn-facebook" scope="public_profile,email" onlogin="sendTokenToServer();">
+            <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
 
+          </fb:login-button>
 
-        </button>
+</div>
+
 <!--END FACEBOOK SIGN IN -->
 
-
+    </div>
   </body>
 
   </html>
