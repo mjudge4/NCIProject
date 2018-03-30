@@ -65,6 +65,8 @@
     </div>
 
 <div class="container">
+{% block content %}
+{% endblock %}
 
   <div class="row">
     {% for i in offerings %}
@@ -89,7 +91,7 @@
                 {% endif %}
             {% endfor %}
             </div>
-            <div class="panel-footer">{{i.location}}</div>
+            <div class="panel-footer"><a href="{{ url_for('offeringLocation', offering_location=i.location) }}">{{i.location}}</a></div>
 
         </div>
     </div>
