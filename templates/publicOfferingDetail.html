@@ -95,7 +95,7 @@
 
 
     {% for tag in tags %}
-        <button type="button" class="btn btn-info">{{ tag.tag_name}}</button>
+        <button type="button" class="btn btn-info"><a href="{{ url_for('offeringByTag', tag_id=tag.id) }}">{{ tag.tag_name}}</a></button>
     {% endfor %}
 
 </div>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for i in taglist %}
+        {% if tag.tag_name == i.tag_name  %}
+            <a href="{{url_for('offeringDetail', offering_id = i.offering_id)}}"><h1>{{ i.offering_id }}</h1></a>
+        {% endif %}
+{% endfor %}
+
+
+</body>
+</html>

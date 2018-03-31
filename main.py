@@ -459,10 +459,32 @@ def offering():
     files = session.query(File).all()
     return render_template('offerings.html', offerings=offerings, files=files)
 
+
+@app.route('/offerings/<offering_location>/')
+def offeringLocation(offering_location):
+    offerings = session.query(Offering).filter_by(location=offering_location)
+    files = session.query(File).all()
+    return render_template('offeringlocation.html', offerings=offerings, files=files, offering_location=offering_location)
+
+@app.route('/offerings/tag/<int:tag_id>/')
+def offeringByTag(tag_id):
+    tag = session.query(Tag).filter_by(id=tag_id).one()
+    taglist = session.query(Tag).all()
+    offerings = session.query(Offering).all()
+    files = session.query(File).all()
+    return render_template('offeringtags.html', offerings=offerings, files=files, tag=tag, taglist=taglist)
+
 @app.route('/offerings/JSON')
 def offeringJSON():
     offerings = session.query(Offering).all()
     return jsonify(offerings=[i.serialize for i in offerings])
+
+@app.route('/offerings/user/<int:user_id>/')
+def myOfferings(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    offerings = session.query(Offering).filter_by(user_id=user.id).all()
+    files = session.query(File).all()
+    return render_template('offerings.html', offerings=offerings, files=files, user_id=user_id, user=user)
 
 @app.route('/offerings/<int:offering_id>/')
 def offeringDetail(offering_id):
