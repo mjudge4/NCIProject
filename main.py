@@ -38,7 +38,7 @@ APPLICATION_NAME = "BabiesGrow"
 app = Flask(__name__)
 
 
-engine = create_engine('mysql://root:password@localhost/replay')
+engine = create_engine('mysql://root:password@localhost/new_schema')
 
 Base.metadata.bind = engine
 

@@ -124,7 +124,7 @@ class File(Base):
 
 
 # Engine instance with a mysql database
-engine = create_engine('mysql://root:password@localhost/replay')
+engine = create_engine('mysql://root:password@localhost/new_schema')
 
 
 #'mysql+pymysql://marc:password@127.0.0.1:8000/offerings'

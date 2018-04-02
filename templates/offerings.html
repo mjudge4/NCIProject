@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Social Media Icons from W3 schools -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script type="text/javascript" src="{{ url_for('static', filename='js/offerings.js') }}"></script>
     <title>BabiesGrow</title>
     <style>
@@ -23,20 +22,20 @@
     }
 
     /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    .panel-body img {
-        height : 450px
+
+    .card-img-top img {
+        height : 400px
     }
 
     a {
-        color: white;
         text-decoration: none !important;
     }
     .container text-center {
         padding: 50px;
+    }
+
+    .card-title {
+        padding-left: 10px;
     }
 
   </style>
@@ -66,8 +65,8 @@
     {% endwith %}
     </div>
 
-    <main>
-    <div class="panel panel-default">
+<main>
+    <div class="card">
     <a href = '{{url_for('newOffering') }}' class="btn btn-primary btn-block" role="button">Add New Offering</a>
     </div>
 
@@ -79,13 +78,8 @@
     {% for i in offerings %}
     <div class ="col-sm-4">
 
-        <div class="panel panel-primary">
-
-            <div class="panel-heading">
-                <a href="{{url_for('offeringDetail', offering_id = i.id)}}"> {{i.title}}</a>
-            </div>
-            <div class="panel-footer"> Posted: {{i.date}}</div>
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-img-top">
             {% for file in files %}
                 {% if i.id == file.offering_id %}
                     <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
@@ -98,22 +92,26 @@
                 {% endif %}
             {% endfor %}
             </div>
-            <div class="panel-footer"><a href="{{ url_for('offeringLocation', offering_location=i.location) }}">{{i.location}}</a></div>
 
+            <div class="card-title">
+                <a href="{{url_for('offeringDetail', offering_id = i.id)}}"><h4>{{i.title}} </h4></a>
+            </div>
+            <div class="row">
+                <div class ="col">
+                    <div class="card-title"> Posted: {{i.date}}</div>
+                </div>
+                <div class ="col">
+                    <div class="card-title"><a href="{{ url_for('offeringLocation', offering_location=i.location) }}">{{i.location}}</a></div>
+                 </div>
         </div>
+    </div>
     </div>
     {% endfor %}
   </div>
 
 </div>
-
-
-
-
-
-
-
-    </main>
+</div>
+</main>
 
 {% include "footer.html" %}
 </body>

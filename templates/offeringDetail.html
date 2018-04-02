@@ -12,12 +12,7 @@
 </head>
 
 <body>
-<div class="row banner menu">
-<figure class="owner">
-    <img src="{{ owner.picture}}">
 
-</figure>
-</div>
 ​<nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
       <ul class="nav navbar-nav">
@@ -34,16 +29,16 @@
       </li>
       </ul>
 
-
     </div>
     </div>
 </nav>
 
-    <div class="alert alert-success">
+
     {% with messages = get_flashed_messages() %}
         {% if messages %}
          <ul>
             {% for message in messages %}
+                <div class="alert alert-success">
                 <li><strong>{{ message }}</strong></li>
             {% endfor %}
          </ul>
@@ -55,7 +50,12 @@
 <main>
   <div class="container">
     <div class = "row">
+
         <div class="col-sm-8">
+
+        <div class="row">
+
+            <div class="col">
 
         <h1>{{offering.title}}</h1>
             <a href='{{ url_for('editOffering', offering_id = offering.id) }}'>Edit</a>
@@ -63,7 +63,15 @@
             <a href='{{ url_for('deleteOffering', offering_id = offering.id) }}'>Delete</a>
         </br>
             <h3>{{offering.date}}</br></h3>
+            </div>
+            <div class="col">
+        <figure class="owner">
+            <img src="{{ owner.picture}}" >
 
+        </figure>
+        </div>
+
+        </div>
             Images:
             {% for x in files %}
                 <img src ="{{ x.image}}"/></br></h5>
