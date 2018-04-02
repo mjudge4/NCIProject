@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Social Media Icons from W3 schools -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Offering Detail</title>
@@ -85,7 +87,7 @@
             <form id="myForm" action="#" method="post">
 
                 </br>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="body"></textarea>
                 </br>
                     <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i>Submit</button>
             </form>
@@ -103,7 +105,7 @@
     </br>
     <a href='{{url_for('offering')}}'>Back</a>
 </main>
-
+{% include "footer.html" %}
 
 </body>
 </html>
