@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Social Media Icons from W3 schools -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script type="text/javascript" src="{{ url_for('static', filename='js/offerings.js') }}"></script>
     <title>BabiesGrow</title>
-    <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-
-    /* Remove the jumbotron's default bottom margin */
+  <style>
+      /* Remove the jumbotron's default bottom margin */
      .jumbotron {
       margin-bottom: 0;
     }
@@ -24,7 +19,7 @@
     /* Add a gray background color and some padding to the footer */
 
     .card-img-top img {
-        height : 400px
+        height : 380px
     }
 
     a {
@@ -38,8 +33,15 @@
         padding-left: 10px;
     }
 
+    .row {
+        padding: 5px;
+    }
+    .btn btn-primary btn-block {
+    margin-bottom: 20px;
+
+    }
+
   </style>
-</head>
 
 
 
@@ -66,11 +68,12 @@
     </div>
 
 <main>
-    <div class="card">
-    <a href = '{{url_for('newOffering') }}' class="btn btn-primary btn-block" role="button">Add New Offering</a>
-    </div>
+
 
 <div class="container">
+<div class="card">
+    <a href = '{{url_for('newOffering') }}' class="btn btn-primary btn-block" role="button">Add New Offering</a>
+    </div>
 {% block content %}
 {% endblock %}
 
@@ -98,7 +101,7 @@
             </div>
             <div class="row">
                 <div class ="col">
-                    <div class="card-title"> Posted: {{i.date}}</div>
+                    <div class="card-title"><p>Posted: {{i.date}}</p> </div>
                 </div>
                 <div class ="col">
                     <div class="card-title"><a href="{{ url_for('offeringLocation', offering_location=i.location) }}">{{i.location}}</a></div>

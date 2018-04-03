@@ -12,26 +12,8 @@
 </head>
 
 <body>
+{% include "header.html" %}
 
-​<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="{{url_for('offering')}}">Show All Offerings</a></li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-      <li>
-        {%if 'username' not in session %}
-            <a href="{{url_for('showLogin')}}">Click Here to Login </a>
-			{% else %}
-			<a href="{{url_for('disconnect')}}">Logout </a>
-        {% endif %}
-      </li>
-      </ul>
-
-    </div>
-    </div>
-</nav>
 
 
     {% with messages = get_flashed_messages() %}
@@ -50,18 +32,17 @@
 <main>
   <div class="container">
     <div class = "row">
-
         <div class="col-sm-8">
-
         <div class="row">
-
             <div class="col">
+                <h1>{{offering.title}}</h1>
 
-        <h1>{{offering.title}}</h1>
-            <a href='{{ url_for('editOffering', offering_id = offering.id) }}'>Edit</a>
-        </br>
-            <a href='{{ url_for('deleteOffering', offering_id = offering.id) }}'>Delete</a>
-        </br>
+                <a class="btn btn-warning btn-sm" href='{{ url_for('editOffering', offering_id = offering.id) }}'>
+                    Edit</a>
+
+                <a class="btn btn-danger btn-sm" href='{{ url_for('deleteOffering', offering_id = offering.id) }}'>
+                    Delete</a>
+
             <h3>{{offering.date}}</br></h3>
             </div>
             <div class="col">
@@ -72,7 +53,7 @@
         </div>
 
         </div>
-            Images:
+
             {% for x in files %}
                 <img src ="{{ x.image}}"/></br></h5>
                 <a href='{{ url_for('deleteFile', offering_id = offering.id, file_id=x.id) }}'>Remove Image</a>
@@ -108,12 +89,12 @@
     </div>
   </div>
 
-        {% for i in tags %}
-        <button type="button" class="btn btn-info">
+      {% for i in tags %}
 
-           <a href="{{ url_for('deleteTag', offering_id = offering.id, tag_id=i.id) }}"<span>{{i.tag_name}}</span></a>
+          <a class="btn btn-info" href="{{ url_for('deleteTag', offering_id = offering.id, tag_id=i.id) }}"
+          <span>{{i.tag_name}}</span>
+          </a>
 
-        </button>
         {% endfor %}
 
         <a href='{{url_for('newTag', offering_id = offering.id)}}'>Add New Tag</a>
@@ -121,7 +102,7 @@
 
 </div>
 </br>
-    <a href='{{url_for('offering')}}'>Back</a>
+    <a class="btn btn-secondary" href='{{url_for('offering')}}'>Back</a>
 
 </main>
 {% include "footer.html" %}

@@ -1,5 +1,5 @@
 //names the current sw cache version to be used
-var staticCacheName = 'babiesgrow-static-v3';
+var staticCacheName = 'babiesgrow-static-v4';
 
 
 //installs the service worker

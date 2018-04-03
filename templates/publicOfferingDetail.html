@@ -12,53 +12,38 @@
 </head>
 
 <body>
-<div class="row banner menu">
-<figure class="owner">
-    <img src="{{ owner.picture}}">
-    <figcaption>{{ owner.name }}</figcaption>
-</figure>
-</div>
+{% include "header.html" %}
 
-​<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="{{url_for('offering')}}">Show All Offerings</a></li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-      <li>
-        {%if 'username' not in session %}
-            <a href="{{url_for('showLogin')}}">Click Here to Login </a>
-			{% else %}
-			<a href="{{url_for('disconnect')}}">Logout </a>
-        {% endif %}
-      </li>
-      </ul>
-
-
-    </div>
-    </div>
-</nav>
-    <div class="alert alert-success">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
          <ul>
             {% for message in messages %}
+                <div class="alert alert-success">
                 <li><strong>{{ message }}</strong></li>
             {% endfor %}
          </ul>
         {% endif %}
     {% endwith %}
     </div>
-<main>
 
+<main>
 <div class="container">
   <div class = "row">
    <div class="col-sm-8">
-    <h1>{{offering.title}}</h1>
-    <h3>Date Added: {{offering.date}}</br></h3>
+    <div class="row">
+            <div class="col">
+                <h1>{{offering.title}}</h1>
 
-        Images:
+            <h3>{{offering.date}}</br></h3>
+            </div>
+            <div class="col">
+        <figure class="owner">
+            <img src="{{ owner.picture}}" >
+
+        </figure>
+        </div>
+
+        </div>
         {% for x in files %}
         <img src ="{{ x.image}}"/></br></h5>
         {% endfor %}
@@ -95,15 +80,15 @@
     </div>
   </div>
 
-
+    <div class="col-sm-8">
     {% for tag in tags %}
-        <button type="button" class="btn btn-info"><a href="{{ url_for('offeringByTag', tag_id=tag.id) }}">{{ tag.tag_name}}</a></button>
+        <a class="btn btn-info" href="{{ url_for('offeringByTag', tag_id=tag.id) }}">{{ tag.tag_name}}</a>
     {% endfor %}
-
+    </div>
 </div>
 
     </br>
-    <a href='{{url_for('offering')}}'>Back</a>
+    <a class="btn btn-secondary" href='{{url_for('offering')}}'>Back</a>
 </main>
 {% include "footer.html" %}
 

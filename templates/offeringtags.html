@@ -7,7 +7,7 @@
 <body>
     {% for i in taglist %}
         {% if tag.tag_name == i.tag_name  %}
-            <a href="{{url_for('offeringDetail', offering_id = i.offering_id)}}"><h1>{{ i.offering_id }}</h1></a>
+            <a href="{{url_for('offeringDetail', offering_id = i.offering_id)}}"><h1>{{ i.offering_title }}</h1></a>
         {% endif %}
 {% endfor %}
 

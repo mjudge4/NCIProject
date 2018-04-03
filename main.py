@@ -394,34 +394,15 @@ def gconnect():
 
 @app.route('/gdisconnect')
 def gdisconnect():
-    # Only disconnect connected user
+    # @ ref https://github.com/udacity/ud330/pull/54/files
     access_token = login_session.get('access_token')
-
-    if access_token is None:
-        response = make_response(json.dumps('Current User is not connected'), 401)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-    # Enact HTTP GET request to revoke current token
-
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    url = 'https://accounts.google.com/o/oauth2/revoke?token={}'.format(access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
-
     if result['status'] == '200':
-        # Reset the user session
-        del login_session['access_token']
-        del login_session['gplus_id']
-        del login_session['username']
-        del login_session['email']
-        del login_session['picture']
-
-        response = make_response(json.dumps('User disconnected.'), 200)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-
+        return "You have been logged out."
     else:
-        # If for some reason the token is invalid
-        response = make_response(json.dumps('Token revoke for current user failed'), 400)
+        response = make_response(json.dumps('Failed to revoke token for given user.'), 400)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -466,6 +447,7 @@ def offeringLocation(offering_location):
     files = session.query(File).all()
     return render_template('offeringlocation.html', offerings=offerings, files=files, offering_location=offering_location)
 
+
 @app.route('/offerings/tag/<int:tag_id>/')
 def offeringByTag(tag_id):
     tag = session.query(Tag).filter_by(id=tag_id).one()
@@ -474,10 +456,12 @@ def offeringByTag(tag_id):
     files = session.query(File).all()
     return render_template('offeringtags.html', offerings=offerings, files=files, tag=tag, taglist=taglist)
 
+
 @app.route('/offerings/JSON')
 def offeringJSON():
     offerings = session.query(Offering).all()
     return jsonify(offerings=[i.serialize for i in offerings])
+
 
 @app.route('/offerings/user/<int:user_id>/')
 def myOfferings(user_id):
@@ -485,6 +469,7 @@ def myOfferings(user_id):
     offerings = session.query(Offering).filter_by(user_id=user.id).all()
     files = session.query(File).all()
     return render_template('offerings.html', offerings=offerings, files=files, user_id=user_id, user=user)
+
 
 @app.route('/offerings/<int:offering_id>/')
 def offeringDetail(offering_id):
@@ -500,12 +485,14 @@ def offeringDetail(offering_id):
         return render_template('offeringDetail.html', offering=offering, tags=tags,
                            comments=comments, offering_id=offering_id, files=files, owner=owner, commenter=commenter)
 
+
 @app.route('/offerings/<int:offering_id>/JSON')
 def offeringDetailJSON(offering_id):
     offering = session.query(Offering).filter_by(id=offering_id).one()
     tags = session.query(Tag).filter_by(offering_id=offering_id).all()
     comments = session.query(Comment).filter_by(offering_id=offering_id).all()
     return jsonify(offering=offering.serialize, Tags=[i.serialize for i in tags], Comment=[j.serialize for j in comments])
+
 
 @app.route('/offerings/<int:offering_id>/edit/', methods=['GET', 'POST'])
 def editOffering(offering_id):
@@ -519,6 +506,7 @@ def editOffering(offering_id):
             return redirect(url_for('offering'))
     else:
         return render_template('editoffering.html', offering=editedOffering)
+
 
 @app.route('/offerings/<int:offering_id>/delete/', methods=['GET', 'POST'])
 def deleteOffering(offering_id):
@@ -535,6 +523,7 @@ def deleteOffering(offering_id):
     else:
         return render_template('deleteoffering.html', offering=offeringToDelete)
 
+
 @app.route('/offerings/<int:offering_id>/tag/new/', methods=['GET', 'POST'])
 def newTag(offering_id):
     if 'username' not in login_session:
@@ -548,6 +537,7 @@ def newTag(offering_id):
         return redirect(url_for('offeringDetail', offering_id=offering_id))
     else:
         return render_template('newtag.html')
+
 
 @app.route('/offerings/<int:offering_id>/tag/<int:tag_id>/delete/', methods=['GET', 'POST'])
 def deleteTag(offering_id, tag_id):
@@ -564,6 +554,7 @@ def deleteTag(offering_id, tag_id):
         return redirect(url_for('offeringDetail', offering_id=offering_id))
     else:
         return render_template('deletetag.html', tag=tagToDelete, offering_id=offering_id)
+
 
 @app.route('/offerings/<int:offering_id>/', methods=['GET', 'POST'])
 def newComment(offering_id):
