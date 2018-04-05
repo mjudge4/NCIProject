@@ -40,13 +40,10 @@
       <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/six-1.9.0" />
       <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/sqlcmd" />
       <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/uritemplate" />
-      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/webapp2-2.3" />
-      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/webapp2-2.5.1" />
-      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/webapp2-2.5.2" />
-      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/webob_0_9" />
       <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/websocket" />
       <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/werkzeug-0.11.10" />
-      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/yaml" />
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/webapp2-2.5.2" />
+      <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/webob-1.2.3" />
       <root url="file://$USER_HOME$/AppData/Local/Google/Cloud SDK/google-cloud-sdk/platform/google_appengine/lib/yaml-3.10" />
     </CLASSES>
     <SOURCES />

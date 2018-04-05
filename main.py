@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, request, redirect, jsonify, url_for
-from sqlalchemy import create_engine, asc
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Offering, Tag, Comment, User, File
 import string
@@ -10,7 +10,6 @@ import random
 import json
 from flask import make_response
 import requests
-import os
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 import datetime
@@ -38,7 +37,7 @@ APPLICATION_NAME = "BabiesGrow"
 app = Flask(__name__)
 
 
-engine = create_engine('mysql+pymysql://root@/offerings?unix_socket=/cloudsql/pycharm-194111:babiesgrow')
+engine = create_engine('mysql+mysqldb://root@/offerings?unix_socket=/cloudsql/pycharm-194111:babiesgrow')
 
 Base.metadata.bind = engine
 
