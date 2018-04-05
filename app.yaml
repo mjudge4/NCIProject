@@ -44,3 +44,8 @@ beta_settings:
     # You must also update the values in config.py.
     #
     cloud_sql_instances: "pycharm-194111:europe-west2:babiesgrow"
+
+
+libraries:
+- name: MySQLdb
+  version: "latest"
