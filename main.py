@@ -30,7 +30,7 @@ CLOUDSQL_USER = 'marc'
 CLOUDSQL_PASSWORD = 'password'
 CLOUDSQL_DATABASE = 'offerings'
 
-CLOUDSQL_CONNECTION_NAME = 'pycharm-194111:us-central1:babiesgrow'
+CLOUDSQL_CONNECTION_NAME = 'pycharm-194111:europe-west2:babiesgrow'
 
 CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "BabiesGrow"
@@ -38,7 +38,7 @@ APPLICATION_NAME = "BabiesGrow"
 app = Flask(__name__)
 
 
-engine = create_engine('mysql://root:password@localhost/new_schema')
+engine = create_engine('mysql+pymysql://root@/offerings?unix_socket=/cloudsql/pycharm-194111:babiesgrow')
 
 Base.metadata.bind = engine
 
@@ -587,6 +587,6 @@ def deleteFile(offering_id, file_id):
 
 
 if __name__ == '__main__':
-    app.secret_key = 'super_duper'
     app.debug = True
+    app.secret_key = 'super_duper'
     app.run(host='0.0.0.0', port=5000)

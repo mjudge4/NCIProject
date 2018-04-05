@@ -6,11 +6,12 @@
 # TODO: Enter your application id below. If you have signed up
 # using cloud.google.com/console use the "project id" for your application
 # id.
-application: pycharm-194111
-version: 1
-runtime: python27
-api_version: 1
-threadsafe: yes
+runtime: python
+env: flex
+entrypoint: gunicorn -b :$PORT main:app
+
+runtime_config:
+  python_version: 2
 
 # Handlers define how to route requests to your application.
 handlers:
@@ -42,4 +43,4 @@ beta_settings:
     #   "project:region:cloudsql-instance"
     # You must also update the values in config.py.
     #
-     cloud_sql_instances: "pycharm-194111:us-central1:babiesgrow"
+     cloud_sql_instances: "pycharm-194111:europe-west2:babiesgrow"

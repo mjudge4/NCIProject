@@ -17,10 +17,11 @@ CLOUDSQL_USER = 'marc'
 CLOUDSQL_PASSWORD = 'password'
 CLOUDSQL_DATABASE = 'offerings'
 
-CLOUDSQL_CONNECTION_NAME = 'pycharm-194111:us-central1:babiesgrow'
+CLOUDSQL_CONNECTION_NAME = 'pycharm-194111:europe-west2:babiesgrow'
 
 # Create instance
 Base = declarative_base()
+
 
 class User(Base):
     __tablename__ = 'user'
@@ -29,9 +30,6 @@ class User(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
-
-
-
 
 
 class Offering(Base):
@@ -124,7 +122,7 @@ class File(Base):
 
 
 # Engine instance with a mysql database
-engine = create_engine('mysql://root:password@localhost/new_schema')
+engine = create_engine('mysql+pymysql://root@/offerings?unix_socket=/cloudsql/pycharm-194111:babiesgrow')
 
 
 #'mysql+pymysql://marc:password@127.0.0.1:8000/offerings'
