@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from flask import Flask, render_template, flash, request, redirect, jsonify, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -37,7 +38,7 @@ APPLICATION_NAME = "BabiesGrow"
 app = Flask(__name__)
 
 
-engine = create_engine('mysql+mysqldb://root@/offerings?unix_socket=/cloudsql/pycharm-194111:babiesgrow')
+engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
 
 Base.metadata.bind = engine
 
@@ -586,6 +587,8 @@ def deleteFile(offering_id, file_id):
 
 
 if __name__ == '__main__':
-    app.debug = True
     app.secret_key = 'super_duper'
-    app.run(host='0.0.0.0', port=5000)
+    app.config['SESSION_TYPE'] = 'filesystem'
+
+    app.debug = True
+    app.run()
