@@ -25,6 +25,7 @@ CLOUD_STORAGE_BUCKET = 'pycharm-194111.appspot.com'
 MAX_CONTENT_LENGTH = 8 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
+SECRET_KEY = 'secret'
 DATA_BACKEND = 'cloudsql'
 CLOUDSQL_USER = 'marc'
 CLOUDSQL_PASSWORD = 'password'
@@ -587,8 +588,11 @@ def deleteFile(offering_id, file_id):
 
 
 if __name__ == '__main__':
-    app.config['SECRET_KEY'] = "super_duper"
-    app.config['SESSION_TYPE'] = 'filesystem'
-
     app.debug = True
     app.run()
+
+
+#https://media.readthedocs.org/pdf/flask/stable/flask.pdf
+# set the secret key. keep this really secret:
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
