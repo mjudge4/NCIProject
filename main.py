@@ -587,7 +587,7 @@ def deleteFile(offering_id, file_id):
 
 
 if __name__ == '__main__':
-    app.secret_key = 'super_duper'
+    app.config['SECRET_KEY'] = "super_duper"
     app.config['SESSION_TYPE'] = 'filesystem'
 
     app.debug = True
