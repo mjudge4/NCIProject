@@ -146,7 +146,7 @@ def newOffering():
 def load_file(offering_id):
     if 'username' not in login_session:
         return redirect('/login')
-    offering = session.query(Offering).filter_by(id=offering_id).one()
+    offering_id = session.query(Offering).filter_by(id=offering_id).one()
     if request.method == 'POST':
         image_url = upload_image_file(request.files.get('file'))
         newFile = File(image=image_url, offering_id=offering_id, user_id=login_session['user_id'])
