@@ -9,29 +9,7 @@
     <title>Remove Tag</title>
 </head>
 <body>
-​<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="{{url_for('offering')}}">Show All Offerings</a>
-            </br>
-            <a href='{{url_for('offeringDetail', offering_id = tag.offering.id)}}'>Back</a></li>
-
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-      <li>
-        {%if 'username' not in session %}
-            <a href="{{url_for('showLogin')}}">Click Here to Login </a>
-			{% else %}
-			<a href="{{url_for('disconnect')}}">Logout </a>
-        {% endif %}
-      </li>
-      </ul>
-
-
-    </div>
-    </div>
-</nav>
+{% include "header.html" %}
 <div class="container">
     <div class="form-group">
         <div class="card text-center" >
