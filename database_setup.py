@@ -3,7 +3,8 @@
 import sys
 
 # Object relational mapping
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String, NVARCHAR
+#Added NVARCHAR to fix Unicode problem for Irish Names with fadas
 
 # To create instance of the class called declarative base to import SQL Alchemy Features
 from sqlalchemy.ext.declarative import declarative_base
@@ -27,7 +28,7 @@ class User(Base):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+    name = Column(NVARCHAR(250), nullable=False)
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
 
@@ -123,7 +124,7 @@ class File(Base):
 
 # Engine instance with a mysql database
 
-engine = create_engine('mysql://root:password@localhost/replay')
+engine = create_engine('mysql://root:password@localhost/new_schema')
 #engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
 
 
