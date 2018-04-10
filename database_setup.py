@@ -122,9 +122,11 @@ class File(Base):
 
 
 # Engine instance with a mysql database
-engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
 
-#engine = create_engine('mysql+mysqldb://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
+engine = create_engine('mysql://root:password@localhost/replay')
+#engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
+
+
 
 
 

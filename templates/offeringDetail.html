@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Offering Detail</title>
 </head>
+<style>
+    .button {
+        padding: 10px;
+    }
+
+</style>
 
 <body>
 {% include "header.html" %}
@@ -48,6 +54,7 @@
             <div class="col">
         <figure class="owner">
             <img src="{{ owner.picture}}" >
+            <figcaption>{{ owner.name }}</figcaption>
 
         </figure>
         </div>
@@ -88,20 +95,20 @@
         </div>
     </div>
   </div>
-
+      <div class="col-sm-8">
       {% for i in tags %}
 
           <a class="btn btn-info" href="{{ url_for('deleteTag', offering_id = offering.id, tag_id=i.id) }}"
           <span>{{i.tag_name}}</span>
           </a>
-
-        {% endfor %}
+      {% endfor %}
 
         <a href='{{url_for('newTag', offering_id = offering.id)}}'>Add New Tag</a>
 
-
+      </div>
 </div>
 </br>
+
     <a class="btn btn-secondary" href='{{url_for('offering')}}'>Back</a>
 
 </main>

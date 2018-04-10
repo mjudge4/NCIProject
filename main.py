@@ -38,8 +38,8 @@ APPLICATION_NAME = "BabiesGrow"
 
 app = Flask(__name__)
 
-
-engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
+engine = create_engine('mysql://root:password@localhost/replay')
+#engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
 
 Base.metadata.bind = engine
 
@@ -146,7 +146,7 @@ def newOffering():
 def load_file(offering_id):
     if 'username' not in login_session:
         return redirect('/login')
-    offering_id = session.query(Offering).filter_by(id=offering_id).one()
+    #offering_id = session.query(Offering).filter_by(id=offering_id).one()
     if request.method == 'POST':
         image_url = upload_image_file(request.files.get('file'))
         newFile = File(image=image_url, offering_id=offering_id, user_id=login_session['user_id'])
@@ -161,10 +161,14 @@ def load_file(offering_id):
 # https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/vision/cloud-client/detect/detect.py
 @app.route('/offerings/<int:offering_id>/new/file/<int:file_id>')
 def uploaded_file(offering_id, file_id):
+    file = session.query(File).filter_by(id=file_id).one()
+    return render_template('uploadedfile.html', file=file, file_id=file_id, offering_id=offering_id)
 
+
+@app.route('/offerings/<int:offering_id>/new/file/<int:file_id>/analyze')
+def analyze_file(offering_id, file_id):
     offering = session.query(Offering).filter_by(id=offering_id).one()
     file = session.query(File).filter_by(id=file_id).one()
-
     client = vision.ImageAnnotatorClient()
     image = types.Image()
     image.source.image_uri = file.image
@@ -177,8 +181,8 @@ def uploaded_file(offering_id, file_id):
         session.add(newTag)
         session.commit()
 
+    return render_template('analyzedfile.html', tags=tags, file_id=file_id, offering_id=offering_id)
 
-    return render_template('uploadedfile.html', tags=tags, file_id=file_id, offering_id=offering_id)
 
 # http://flask.pocoo.org/docs/0.12/patterns/fileuploads/
 # Return uploaded file code from Flask docs
@@ -588,11 +592,11 @@ def deleteFile(offering_id, file_id):
 
 
 if __name__ == '__main__':
+    app.secret_key = 'super_duper'
     app.debug = True
-    app.run()
-
+    app.run(host='0.0.0.0', port=5000)
 
 #https://media.readthedocs.org/pdf/flask/stable/flask.pdf
 # set the secret key. keep this really secret:
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+#app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
