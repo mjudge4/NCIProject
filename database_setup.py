@@ -4,7 +4,7 @@ import sys
 
 # Object relational mapping
 from sqlalchemy import Column, ForeignKey, Integer, String, NVARCHAR
-#Added NVARCHAR to fix Unicode problem for Irish Names with fadas
+# Added NVARCHAR to fix Unicode problem for Irish Names with fadas
 
 # To create instance of the class called declarative base to import SQL Alchemy Features
 from sqlalchemy.ext.declarative import declarative_base
@@ -75,7 +75,7 @@ class Tag(Base):
         # Return objects in serializable form
         return {
             'id': self.id,
-            'name': self.name,
+            'name': self.tag_name,
 
         }
 

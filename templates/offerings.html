@@ -82,7 +82,8 @@
                 {% if i.id == file.offering_id %}
                     <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
                         {% if file.image is none %}
-                            <img src ="{{ url_for('static', filename="No_Image_Available.jpg") }}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
+                            <img src ="{{ url_for('static', filename="No_Image_Available.jpg") }}"
+                                 class="img-responsive" style="width:100%" style="height:100%" alt="Image">
                         {% else %}
                             <img src ="{{file.image}}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
                         {% endif %}
@@ -99,7 +100,8 @@
                     <div class="card-title"><p>Posted: {{i.date}}</p> </div>
                 </div>
                 <div class ="col">
-                    <div class="card-title"><a href="{{ url_for('offeringLocation', offering_location=i.location) }}">{{i.location}}</a></div>
+                    <div class="card-title"><a href="{{ url_for('offeringLocation', offering_location=i.location) }}">
+                        {{i.location}}</a></div>
                  </div>
             </div>
         </div>

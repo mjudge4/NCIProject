@@ -38,7 +38,7 @@ APPLICATION_NAME = "BabiesGrow"
 
 app = Flask(__name__)
 
-engine = create_engine('mysql://root:password@localhost/replay')
+engine = create_engine('mysql://root:password@localhost/new_schema')
 #engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
 
 Base.metadata.bind = engine
@@ -46,20 +46,25 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 #https://stackoverflow.com/questions/46381128/building-progressive-web-apps-using-python-flask
 @app.route('/sw.js', methods=['GET'])
 def sw():
     return app.send_static_file('sw.js')
 
+
 # Start of upload to cloud storage code
-# Code taken from https://github.com/GoogleCloudPlatform/getting-started-python/blob/master/3-binary-data/bookshelf/storage.py
+# Code taken from below and modified slightly
+# https://github.com/GoogleCloudPlatform/getting-started-python/blob/master/3-binary-data/bookshelf/storage.py
+
 
 def _get_storage_client():
     return storage.Client(
         project='pycharm-194111')
 
-def _check_extension(filename, allowed_extensions):
-    if '.' not in filename or filename.split('.').pop() not in allowed_extensions:
+
+def _check_extension(filename):
+    if '.' not in filename or filename.split('.').pop() not in ALLOWED_EXTENSIONS:
         raise BadRequest(
             "{0} has an invalid name or extension".format(filename))
 
@@ -75,7 +80,6 @@ def _safe_filename(filename):
     date = datetime.datetime.utcnow().strftime("%Y-%m-%d-%H%M%S")
     basename, extension = filename.rsplit('.', 1)
     return "{0}-{1}.{2}".format(basename, date, extension)
-
 
 
 # [START upload_image_file]
@@ -99,13 +103,14 @@ def upload_image_file(file):
     return public_url
 # [END upload_image_file]
 
+
 # [START upload_file]
 def upload_file(file_stream, filename, content_type):
     """
     Uploads a file to a given Cloud Storage bucket and returns the public url
     to the new object.
     """
-    #_check_extension(filename, 'ALLOWED_EXTENSIONS')
+    _check_extension(filename)
     filename = _safe_filename(filename)
 
     client = _get_storage_client()
@@ -124,8 +129,8 @@ def upload_file(file_stream, filename, content_type):
     return url
 # [END upload_file]
 
-
 # End of upload to cloud storage code
+
 
 # Creating new offering object
 @app.route('/offerings/new/', methods=['GET', 'POST'])
@@ -133,7 +138,8 @@ def newOffering():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        newOffering = Offering(title=request.form['title'], location=request.form['location'], date=datetime.date.today(), user_id=login_session['user_id'])
+        newOffering = Offering(title=request.form['title'], location=request.form['location'],
+                               date=datetime.date.today(), user_id=login_session['user_id'])
         session.add(newOffering)
         session.commit()
         flash("New Offering added")
@@ -141,12 +147,12 @@ def newOffering():
     else:
         return render_template('newoffering.html')
 
+
 # Routed to image upload. Image will retrive the cloud storage url and save it to file object
 @app.route('/offerings/<int:offering_id>/new', methods=['GET', 'POST'])
 def load_file(offering_id):
     if 'username' not in login_session:
         return redirect('/login')
-    #offering_id = session.query(Offering).filter_by(id=offering_id).one()
     if request.method == 'POST':
         image_url = upload_image_file(request.files.get('file'))
         newFile = File(image=image_url, offering_id=offering_id, user_id=login_session['user_id'])
