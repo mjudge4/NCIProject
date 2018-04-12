@@ -8,39 +8,39 @@
     <meta charset="UTF-8">
     <title>Tags</title>
     <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
+        /* Remove the navbar's default rounded borders and increase the bottom margin */
+        .navbar {
+            margin-bottom: 50px;
+            border-radius: 0;
+        }
 
-    /* Remove the jumbotron's default bottom margin */
-     .jumbotron {
-      margin-bottom: 0;
-    }
+        /* Remove the jumbotron's default bottom margin */
+        .jumbotron {
+            margin-bottom: 0;
+        }
 
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    .panel-body img {
-        height : 450px
-    }
+        /* Add a gray background color and some padding to the footer */
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+        }
+        .panel-body img {
+            height : 450px
+        }
 
-    a {
-        color: white;
-    }
-  </style>
+        a {
+            color: white;
+        }
+    </style>
 
 </head>
 <body>
 
 <div class="jumbotron">
-  <div class="container text-center">
-    <h1>BabiesGrow</h1>
-    <p>Reduce, Reuse, Recycle</p>
-  </div>
+    <div class="container text-center">
+        <h1>BabiesGrow</h1>
+        <p>Reduce, Reuse, Recycle</p>
+    </div>
 </div>
 
 <div class="container">
@@ -48,23 +48,23 @@
         <div class="col-sm">
 
 
-       <img src ="{{ file.image }}">
+            <img src ="{{ file.image }}">
 
 
-   </div>
+        </div>
         <div class="col">
             <div id="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-            Analyzing File
-          </div>
-        </div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                    Analyzing File
+                </div>
+            </div>
             <div class="row h-100 justify-content-left align-items-center">
 
-            <a class="btn btn-primary btn-lg" href="{{url_for('analyze_file', offering_id = offering_id, file_id=file_id)}}" onclick="myFunction()">
-                <h3>Analyze Offering for Tags</h3>
+                <a class="btn btn-primary btn-lg" href="{{url_for('analyze_file', offering_id = offering_id, file_id=file_id)}}" onclick="myFunction()">
+                    <h3>Analyze Offering for Tags</h3>
 
-            </a>
+                </a>
 
             </div>
             <script>

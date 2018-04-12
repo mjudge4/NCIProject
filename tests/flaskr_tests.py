@@ -30,9 +30,7 @@ class BasicTests(unittest.TestCase):
     def tearDown(self):
         pass
 
-    ###############
-    #### tests ####
-    ###############
+
 
     def test_main_page(self):
         response = self.app.get('/', follow_redirects=True)

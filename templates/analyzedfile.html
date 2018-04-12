@@ -8,62 +8,62 @@
     <meta charset="UTF-8">
     <title>Tags</title>
     <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
+        /* Remove the navbar's default rounded borders and increase the bottom margin */
+        .navbar {
+            margin-bottom: 50px;
+            border-radius: 0;
+        }
 
-    /* Remove the jumbotron's default bottom margin */
-     .jumbotron {
-      margin-bottom: 0;
-    }
+        /* Remove the jumbotron's default bottom margin */
+        .jumbotron {
+            margin-bottom: 0;
+        }
 
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-    .panel-body img {
-        height : 450px
-    }
+        /* Add a gray background color and some padding to the footer */
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+        }
+        .panel-body img {
+            height : 450px
+        }
 
-    a {
-        color: white;
-    }
-  </style>
+        a {
+            color: white;
+        }
+    </style>
 
 </head>
 <body>
 
 <div class="jumbotron">
-  <div class="container text-center">
-    <h1>BabiesGrow</h1>
-    <p>Reduce, Reuse, Recycle</p>
-  </div>
+    <div class="container text-center">
+        <h1>BabiesGrow</h1>
+        <p>Reduce, Reuse, Recycle</p>
+    </div>
 </div>
 
 <div class="container">
     <div class="row">
         <div class="col-sm">
-        Tag Titles Found:
+            Tag Titles Found:
 
-       <div class="btn-group-vertical">
+            <div class="btn-group-vertical">
 
-        {% for tag in tags %}
-            <button type="button" class="btn btn-info">
-            <span>{{tag.description}}</span>
-            </button>
-        {% endfor %}
-       </div>
+                {% for tag in tags %}
+                    <button type="button" class="btn btn-info">
+                        <span>{{tag.description}}</span>
+                    </button>
+                {% endfor %}
+            </div>
 
 
-   </div>
+        </div>
         <div class="col">
             <div class="row h-100 justify-content-left align-items-center">
-            <a class="btn btn-primary btn-lg" href="{{url_for('offeringDetail', offering_id = offering_id)}}">
-                <h3>View Offering</h3>
-            </a>
+                <a class="btn btn-primary btn-lg" href="{{url_for('offeringDetail', offering_id = offering_id)}}">
+                    <h3>View Offering</h3>
+                </a>
 
             </div>
         </div>

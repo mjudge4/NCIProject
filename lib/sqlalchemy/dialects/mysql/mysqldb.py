@@ -24,16 +24,16 @@ handling.
 Py3K Support
 ------------
 
-Currently, MySQLdb only runs on Python 2 and development has been stopped.
-`mysqlclient`_ is fork of MySQLdb and provides Python 3 support as well
+Currently, mysqldb only runs on Python 2 and development has been stopped.
+`mysqlclient`_ is fork of mysqldb and provides Python 3 support as well
 as some bugfixes.
 
-.. _mysqlclient: https://github.com/PyMySQL/mysqlclient-python
+.. _mysqlclient: https://github.com/mysqldb/mysqlclient-python
 
-Using MySQLdb with Google Cloud SQL
+Using mysqldb with Google Cloud SQL
 -----------------------------------
 
-Google Cloud SQL now recommends use of the MySQLdb dialect.  Connect
+Google Cloud SQL now recommends use of the mysqldb dialect.  Connect
 using a URL like the following::
 
     mysql+mysqldb://root@/<dbname>?unix_socket=/cloudsql/<projectid>:<instancename>
@@ -99,7 +99,7 @@ class MySQLDialect_mysqldb(MySQLDialect):
     @util.langhelpers.memoized_property
     def supports_server_side_cursors(self):
         try:
-            cursors = __import__('MySQLdb.cursors').cursors
+            cursors = __import__('mysqldb.cursors').cursors
             self._sscursor = cursors.SSCursor
             return True
         except (ImportError, AttributeError):
@@ -107,7 +107,7 @@ class MySQLDialect_mysqldb(MySQLDialect):
 
     @classmethod
     def dbapi(cls):
-        return __import__('MySQLdb')
+        return __import__('MySQLdb-Python')
 
     def do_executemany(self, cursor, statement, parameters, context=None):
         rowcount = cursor.executemany(statement, parameters)
@@ -116,7 +116,7 @@ class MySQLDialect_mysqldb(MySQLDialect):
 
     def _check_unicode_returns(self, connection):
         # work around issue fixed in
-        # https://github.com/farcepest/MySQLdb1/commit/cd44524fef63bd3fcb71947392326e9742d520e8
+        # https://github.com/farcepest/mysqldb1/commit/cd44524fef63bd3fcb71947392326e9742d520e8
         # specific issue w/ the utf8_bin collation and unicode returns
 
         has_utf8_bin = self.server_version_info > (5, ) and \

@@ -12,55 +12,55 @@
 </head>
 <body>
 <div class="jumbotron">
-  <div class="container text-center">
-    <h1>BabiesGrow</h1>
-    <p>Reduce, Reuse, Recycle</p>
-  </div>
+    <div class="container text-center">
+        <h1>BabiesGrow</h1>
+        <p>Reduce, Reuse, Recycle</p>
+    </div>
 </div>
 {% include "header.html" %}
 <div class="container">
 
     <div class="row">
-     {% for i in taglist %}
+        {% for i in taglist %}
             {% if tag.tag_name == i.tag_name  %}
                 <div class ="col-sm-4">
 
                 <div class="card">
-                    <div class="card-img-top">
-                        {% for file in files %}
-                            {% if i.offering_id == file.offering_id %}
-                                <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
-                                    {% if file.image is none %}
-                                        <img src ="{{ url_for('static', filename="No_Image_Available.jpg") }}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
-                                    {% else %}
-                                        <img src ="{{file.image}}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
-                                    {% endif %}
-                                </a>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                <div class="card-img-top">
+                    {% for file in files %}
+                        {% if i.offering_id == file.offering_id %}
+                            <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
+                                {% if file.image is none %}
+                                    <img src ="{{ url_for('static', filename="No_Image_Available.jpg") }}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
+                                {% else %}
+                                    <img src ="{{file.image}}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
+                                {% endif %}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
 
-                    <div class="card-title">
-                        <a href="{{url_for('offeringDetail', offering_id = i.offering_id)}}">
-                            <h1>{{ i.offering.title }}</h1>
-                        </a>
+                <div class="card-title">
+                    <a href="{{url_for('offeringDetail', offering_id = i.offering_id)}}">
+                        <h1>{{ i.offering.title }}</h1>
+                    </a>
+                </div>
+                <div class="row">
+                    <div class ="col">
+                        <div class="card-title"><p>Posted: {{i.offering.date}}</p> </div>
                     </div>
-                     <div class="row">
-                        <div class ="col">
-                            <div class="card-title"><p>Posted: {{i.offering.date}}</p> </div>
-                        </div>
-                        <div class ="col">
-                            <div class="card-title"><a href="{{ url_for('offeringLocation', offering_location=i.location) }}">{{i.offering.location}}</a></div>
-                         </div>
-                     </div>
+                    <div class ="col">
+                        <div class="card-title"><a href="{{ url_for('offeringLocation', offering_location=i.location) }}">{{i.offering.location}}</a></div>
+                    </div>
+                </div>
 
             {% endif %}
-                 </div>
-     {% endfor %}
+        </div>
+        {% endfor %}
 
 
 
-                </div>
+        </div>
     </div>
 </div>
 </body>

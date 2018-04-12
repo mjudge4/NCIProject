@@ -20,6 +20,7 @@ import six
 from google.cloud import vision
 from google.cloud.vision import types
 
+
 PROJECT_ID = 'pycharm-194111'
 CLOUD_STORAGE_BUCKET = 'pycharm-194111.appspot.com'
 MAX_CONTENT_LENGTH = 8 * 1024 * 1024
@@ -179,15 +180,17 @@ def analyze_file(offering_id, file_id):
     image = types.Image()
     image.source.image_uri = file.image
 
-    response = client.label_detection(image=image)
-    tags = response.label_annotations
+    response = client.web_detection(image=image)
+    annotations = response.web_detection
 
-    for tag in tags:
-        newTag = Tag(tag_name=tag.description, offering_id=offering.id)
-        session.add(newTag)
-        session.commit()
+    if annotations.web_entities:
+        for entity in annotations.web_entities:
+            if entity.score > 0.7:
+                newTag = Tag(tag_name=entity.description, offering_id=offering.id)
+                session.add(newTag)
+                session.commit()
 
-    return render_template('analyzedfile.html', tags=tags, file_id=file_id, offering_id=offering_id)
+        return render_template('analyzedfile.html', file_id=file_id, offering_id=offering_id)
 
 
 # http://flask.pocoo.org/docs/0.12/patterns/fileuploads/
@@ -494,7 +497,7 @@ def offeringDetail(offering_id):
         return render_template('publicOfferingDetail.html', offering=offering, files=files, tags=tags, comments=comments, offering_id=offering_id, owner=owner, commenter=commenter)
     else:
         return render_template('offeringDetail.html', offering=offering, tags=tags,
-                           comments=comments, offering_id=offering_id, files=files, owner=owner, commenter=commenter)
+                               comments=comments, offering_id=offering_id, files=files, owner=owner, commenter=commenter)
 
 
 @app.route('/offerings/<int:offering_id>/JSON')
