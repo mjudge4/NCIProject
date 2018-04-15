@@ -25,6 +25,7 @@ PROJECT_ID = 'pycharm-194111'
 CLOUD_STORAGE_BUCKET = 'pycharm-194111.appspot.com'
 MAX_CONTENT_LENGTH = 8 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+COLOURS = set(['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'indigo', 'violet', 'purple', 'magenta', 'pink', 'brown', 'white', 'gray', 'black'])
 
 SECRET_KEY = 'secret'
 DATA_BACKEND = 'cloudsql'
@@ -65,7 +66,7 @@ def _get_storage_client():
 
 
 def _check_extension(filename):
-    if '.' not in filename or filename.split('.').pop() not in ALLOWED_EXTENSIONS:
+    if '.' not in filename or filename.split('.').pop().lower() not in ALLOWED_EXTENSIONS:
         raise BadRequest(
             "{0} has an invalid name or extension".format(filename))
 
@@ -176,21 +177,40 @@ def uploaded_file(offering_id, file_id):
 def analyze_file(offering_id, file_id):
     offering = session.query(Offering).filter_by(id=offering_id).one()
     file = session.query(File).filter_by(id=file_id).one()
+
     client = vision.ImageAnnotatorClient()
     image = types.Image()
     image.source.image_uri = file.image
+
+    response3 = client.label_detection(image=image)
+    labels = response3.label_annotations
+
+    for label in labels:
+        if label.description in COLOURS:
+            newTag = Tag(tag_name=label.description, offering_id=offering.id)
+            session.add(newTag)
+            session.commit()
+
+
+    response2 = client.logo_detection(image=image)
+    logos = response2.logo_annotations
+
+    for logo in logos:
+        newTag = Tag(tag_name=logo.description, offering_id=offering.id)
+        session.add(newTag)
+        session.commit()
 
     response = client.web_detection(image=image)
     annotations = response.web_detection
 
     if annotations.web_entities:
         for entity in annotations.web_entities:
-            if entity.score > 0.7:
+            if entity.score > 0.65:
                 newTag = Tag(tag_name=entity.description, offering_id=offering.id)
                 session.add(newTag)
                 session.commit()
-
-        return render_template('analyzedfile.html', file_id=file_id, offering_id=offering_id)
+                tags = session.query(Tag).filter_by(offering_id=offering_id).all()
+        return render_template('analyzedfile.html', tags=tags, file_id=file_id, offering_id=offering_id)
 
 
 # http://flask.pocoo.org/docs/0.12/patterns/fileuploads/

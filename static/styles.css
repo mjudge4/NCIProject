@@ -128,34 +128,10 @@ main .detail {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 }
 
-@media screen and (min-width: 450px) {
-
-    .offering_list {
-        width: 33.333333%;
-        float: left;
-
-    }
+.carousel-inner img {
+            height : 650px
 }
 
-@media screen and (min-width: 600px) {
-    .offering_list {
-        margin-right: 20px;
-        float: left;
-    }
 
-}
-
-@media screen and (min-width: 800px) {
-
-    .offering_container {
-
-    }
-    .offering_list {
-        width: 25%;
-
-
-    }
-
-}
 
 

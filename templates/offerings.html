@@ -75,20 +75,14 @@
         <div class="row">
             {% for i in offerings %}
                 <div class ="col-sm-4">
-
                     <div class="card">
                         <div class="card-img-top">
-                            {% for file in files %}
-                                {% if i.id == file.offering_id %}
-                                    <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
-                                        {% if file.image is none %}
-                                            <img src ="{{ url_for('static', filename="No_Image_Available.jpg") }}"
-                                                 class="img-responsive" style="width:100%" style="height:100%" alt="Image">
-                                        {% else %}
-                                            <img src ="{{file.image}}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
-                                        {% endif %}
-                                    </a>
-                                {% endif %}
+                            {% for file in files if i.id == file.offering_id %}
+                                <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
+                                    {% if loop.index == 1 %}
+                                        <img src ="{{file.image|e}}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
+                                    {% endif %}
+                                </a>
                             {% endfor %}
                         </div>
 
