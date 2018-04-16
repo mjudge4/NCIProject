@@ -25,7 +25,8 @@ PROJECT_ID = 'pycharm-194111'
 CLOUD_STORAGE_BUCKET = 'pycharm-194111.appspot.com'
 MAX_CONTENT_LENGTH = 8 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-COLOURS = set(['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'indigo', 'violet', 'purple', 'magenta', 'pink', 'brown', 'white', 'gray', 'black'])
+COLOURS = set(['red', 'orange', 'yellow', 'green', 'cyan', 'blue',
+               'indigo', 'violet', 'purple', 'magenta', 'pink', 'brown', 'white', 'gray', 'black'])
 
 SECRET_KEY = 'secret'
 DATA_BACKEND = 'cloudsql'
@@ -448,9 +449,11 @@ def createUser(login_session):
     user = session.query(User).filter_by(email=login_session['email']).one()
     return user.id
 
+
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id=user_id).one()
     return user
+
 
 def getUsers(user_id):
     user = session.query(User).filter_by(id=user_id).all()
@@ -464,7 +467,7 @@ def getUserID(email):
     except:
         return None
 
-# Code for structuring the data and developing RESTful API endpoints
+# Code for structuring the data and developing  API endpoints
 # inspired by the Udacity course  - Full Stack Foundations
 
 @app.route('/')
@@ -479,7 +482,8 @@ def offering():
 def offeringLocation(offering_location):
     offerings = session.query(Offering).filter_by(location=offering_location)
     files = session.query(File).all()
-    return render_template('offeringlocation.html', offerings=offerings, files=files, offering_location=offering_location)
+    return render_template('offeringlocation.html', offerings=offerings, files=files,
+                           offering_location=offering_location)
 
 
 @app.route('/offerings/tag/<int:tag_id>/')
@@ -498,11 +502,11 @@ def offeringJSON():
 
 
 @app.route('/offerings/user/<int:user_id>/')
-def myOfferings(user_id):
+def offeringsByUser(user_id):
     user = session.query(User).filter_by(id=user_id).one()
-    offerings = session.query(Offering).filter_by(user_id=user.id).all()
+    offerings = session.query(Offering).filter_by(user_id=user_id).all()
     files = session.query(File).all()
-    return render_template('offerings.html', offerings=offerings, files=files, user_id=user_id, user=user)
+    return render_template('offerings.html', offerings=offerings, files=files, user=user)
 
 
 @app.route('/offerings/<int:offering_id>/')
@@ -514,10 +518,11 @@ def offeringDetail(offering_id):
     comments = session.query(Comment).filter_by(offering_id=offering_id).all()
     commenter = getUsers(Comment.user_id)
     if 'username' not in login_session or owner.id != login_session['user_id']:
-        return render_template('publicOfferingDetail.html', offering=offering, files=files, tags=tags, comments=comments, offering_id=offering_id, owner=owner, commenter=commenter)
+        return render_template('publicOfferingDetail.html', offering=offering, files=files, tags=tags,
+                               comments=comments, offering_id=offering_id, owner=owner, commenter=commenter)
     else:
-        return render_template('offeringDetail.html', offering=offering, tags=tags,
-                               comments=comments, offering_id=offering_id, files=files, owner=owner, commenter=commenter)
+        return render_template('offeringDetail.html', offering=offering, tags=tags, comments=comments,
+                               offering_id=offering_id, files=files, owner=owner, commenter=commenter)
 
 
 @app.route('/offerings/<int:offering_id>/JSON')
@@ -525,7 +530,8 @@ def offeringDetailJSON(offering_id):
     offering = session.query(Offering).filter_by(id=offering_id).one()
     tags = session.query(Tag).filter_by(offering_id=offering_id).all()
     comments = session.query(Comment).filter_by(offering_id=offering_id).all()
-    return jsonify(offering=offering.serialize, Tags=[i.serialize for i in tags], Comment=[j.serialize for j in comments])
+    return jsonify(offering=offering.serialize, Tags=[i.serialize for i in tags],
+                   Comment=[j.serialize for j in comments])
 
 
 @app.route('/offerings/<int:offering_id>/edit/', methods=['GET', 'POST'])
@@ -548,7 +554,8 @@ def deleteOffering(offering_id):
         return redirect('/login')
     offeringToDelete = session.query(Offering).filter_by(id=offering_id).one()
     if offeringToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to delete this offering.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert" \
+               "('You are not authorized to delete this offering.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(offeringToDelete)
         session.commit()
@@ -580,7 +587,8 @@ def deleteTag(offering_id, tag_id):
     offering = session.query(Offering).filter_by(id=offering_id).one()
     tagToDelete = session.query(Tag).filter_by(id=tag_id).one()
     if offering.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to remove this Tag.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert" \
+               "('You are not authorized to remove this Tag.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(tagToDelete)
         session.commit()
@@ -610,7 +618,8 @@ def deleteFile(offering_id, file_id):
     offering = session.query(Offering).filter_by(id=offering_id).one()
     fileToDelete = session.query(File).filter_by(id=file_id).one()
     if offering.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to delete this offering.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert" \
+               "('You are not authorized to delete this offering.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(fileToDelete)
         session.commit()

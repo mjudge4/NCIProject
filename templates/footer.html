@@ -1,4 +1,8 @@
-
+<script>
+    function newsFunction() {
+        alert("Your email has been added");
+    }
+</script>
 <footer class="jumbotron footer">
     <div class="row">
         <div class="container text-center">
@@ -21,10 +25,11 @@
 
         <div class="container text-center">
             <p class="newsletter">Join our newsletter</p>
-            <form method="post" action="#" id="form_newsletter">
-                <input type="email" class="input_newsletter" id="email_newsletter" name="email" placeholder="email" required>
-                <button type="submit" class="btn btn-primary brand_orange_bg footer_btn" form="form_newsletter" value="Submit">Sign-up</button>
+            <form action="" method="" id="form_newsletter" onsubmit="newsFunction()">
+                <input type="email"   name="email" placeholder="email" required>
+                <button type="submit" value="Submit">Sign-up</button>
             </form>
+
         </div>
 
     </div>
