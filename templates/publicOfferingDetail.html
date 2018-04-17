@@ -14,7 +14,7 @@
     <style>
         /* Make the image fully responsive */
         .btn btn-info {
-            padding: 5px;
+            padding-bottom: 10px;
         }
         .carousel-inner img {
             height : 650px
@@ -109,7 +109,9 @@
 
         <div class="col-sm-8">
             {% for tag in tags %}
-                <a class="btn btn-info" href="{{ url_for('offeringByTag', tag_id=tag.id) }}">{{ tag.tag_name}}</a>
+                <button class="btn btn-info" href="{{ url_for('offeringByTag', tag_id=tag.id) }}">
+                 {{ tag.tag_name}}
+                </button>
             {% endfor %}
         </div>
     </div>

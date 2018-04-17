@@ -192,7 +192,6 @@ def analyze_file(offering_id, file_id):
             session.add(newTag)
             session.commit()
 
-
     response2 = client.logo_detection(image=image)
     logos = response2.logo_annotations
 
