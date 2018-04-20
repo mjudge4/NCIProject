@@ -1,5 +1,5 @@
 //names the current sw cache version to be used
-var staticCacheName = 'babiesgrow-static-v4';
+var staticCacheName = 'babiesgrow-static-v5';
 
 
 //installs the service worker
@@ -16,22 +16,32 @@ self.addEventListener('install', function(event) {
     );
 });
 
+
 self.addEventListener('activate', function(event) {
-    event.waitUntil(
-        caches.keys().then(function(cacheNames) {
-            return Promise.all(
-                cacheNames.filter(function(cacheName) {
-                    return cacheName.startsWith('babiesgrow-') &&
-                        cacheName != staticCacheName;
-                }).map(function(cacheName) {
-                    return caches.delete(cacheName);
-                })
-            );
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+          return cacheName.startsWith('babiesgrow-') &&
+                 cacheName != staticCacheName;
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
         })
-    );
+      );
+    })
+  );
 });
 
 self.addEventListener('fetch', function(event) {
+  var requestUrl = new URL(event.request.url);
+
+  if (requestUrl.origin === location.origin) {
+    if (requestUrl.pathname === '/') {
+      event.respondWith(caches.match('/'));
+      return;
+    }
+  }
+
   event.respondWith(
     caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
@@ -39,6 +49,11 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
+self.addEventListener('message', function(event) {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
 
 
 /*

@@ -25,6 +25,7 @@ PROJECT_ID = 'pycharm-194111'
 CLOUD_STORAGE_BUCKET = 'pycharm-194111.appspot.com'
 MAX_CONTENT_LENGTH = 8 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
 COLOURS = set(['red', 'orange', 'yellow', 'green', 'cyan', 'blue',
                'indigo', 'violet', 'purple', 'magenta', 'pink', 'brown', 'white', 'gray', 'black'])
 
@@ -183,8 +184,8 @@ def analyze_file(offering_id, file_id):
     image = types.Image()
     image.source.image_uri = file.image
 
-    response3 = client.label_detection(image=image)
-    labels = response3.label_annotations
+    response = client.label_detection(image=image)
+    labels = response.label_annotations
 
     for label in labels:
         if label.description in COLOURS:
@@ -200,8 +201,8 @@ def analyze_file(offering_id, file_id):
         session.add(newTag)
         session.commit()
 
-    response = client.web_detection(image=image)
-    annotations = response.web_detection
+    response3 = client.web_detection(image=image)
+    annotations = response3.web_detection
 
     if annotations.web_entities:
         for entity in annotations.web_entities:
@@ -469,6 +470,7 @@ def getUserID(email):
 # Code for structuring the data and developing  API endpoints
 # inspired by the Udacity course  - Full Stack Foundations
 
+
 @app.route('/')
 @app.route('/offerings/')
 def offering():
@@ -517,8 +519,8 @@ def offeringDetail(offering_id):
     comments = session.query(Comment).filter_by(offering_id=offering_id).all()
     commenter = getUsers(Comment.user_id)
     if 'username' not in login_session or owner.id != login_session['user_id']:
-        return render_template('publicOfferingDetail.html', offering=offering, files=files, tags=tags,
-                               comments=comments, offering_id=offering_id, owner=owner, commenter=commenter)
+        return render_template('publicOfferingDetail.html', offering=offering, tags=tags, comments=comments,
+                                  offering_id=offering_id, files=files, owner=owner, commenter=commenter)
     else:
         return render_template('offeringDetail.html', offering=offering, tags=tags, comments=comments,
                                offering_id=offering_id, files=files, owner=owner, commenter=commenter)
