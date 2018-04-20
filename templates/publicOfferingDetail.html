@@ -109,9 +109,9 @@
 
         <div class="col-sm-8">
             {% for tag in tags %}
-                <button class="btn btn-info" href="{{ url_for('offeringByTag', tag_id=tag.id) }}">
+                <a class="btn btn-info" href="{{ url_for('offeringByTag', tag_id=tag.id) }}">
                  {{ tag.tag_name}}
-                </button>
+                </a>
             {% endfor %}
         </div>
     </div>

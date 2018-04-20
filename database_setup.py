@@ -15,10 +15,10 @@ from sqlalchemy import create_engine
 
 DATA_BACKEND = 'cloudsql'
 CLOUDSQL_USER = 'marc'
-CLOUDSQL_PASSWORD = 'password'
+CLOUDSQL_PASSWORD = 'rMn10huC1kpzGFBK'
 CLOUDSQL_DATABASE = 'offerings'
 
-CLOUDSQL_CONNECTION_NAME = 'pycharm-194111:europe-west2:babiesgrow'
+CLOUDSQL_CONNECTION_NAME = 'pycharm-194111:europe-west2:babygrow'
 
 # Create instance
 Base = declarative_base()
@@ -124,10 +124,10 @@ class File(Base):
 
 # Engine instance with a mysql database
 
-engine = create_engine('mysql://root:password@localhost/new_schema')
-#engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
+#engine = create_engine('mysql://root:password@localhost/new_schema')
+engine = create_engine('mysql+pymysql://root:rMn10huC1kpzGFBK@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babygrow')
 
-
+#engine = create_engine('mysql+pymysql://marc:rMn10huC1kpzGFBK@127.0.0.1:8000/offerings')
 
 
 

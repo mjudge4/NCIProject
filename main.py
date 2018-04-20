@@ -35,15 +35,17 @@ CLOUDSQL_USER = 'marc'
 CLOUDSQL_PASSWORD = 'password'
 CLOUDSQL_DATABASE = 'offerings'
 
-CLOUDSQL_CONNECTION_NAME = 'pycharm-194111:europe-west2:babiesgrow'
+CLOUDSQL_CONNECTION_NAME = 'pycharm-194111:europe-west2:babygrow'
 
 CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "BabiesGrow"
 
 app = Flask(__name__)
 
-engine = create_engine('mysql://root:password@localhost/new_schema')
-#engine = create_engine('mysql+pymysql://root:password@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babiesgrow')
+engine = create_engine('mysql+pymysql://root:rMn10huC1kpzGFBK@/offerings?unix_socket=/cloudsql/pycharm-194111:europe-west2:babygrow')
+
+#engine = create_engine('mysql://root:password@localhost/new_schema')
+#engine = create_engine('mysql+pymysql://marc:rMn10huC1kpzGFBK@127.0.0.1:8000/offerings')
 
 Base.metadata.bind = engine
 

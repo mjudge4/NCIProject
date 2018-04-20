@@ -29,7 +29,7 @@
                 <div class="card-img-top">
                     {% for file in files %}
                         {% if i.offering_id == file.offering_id %}
-                            <a href="{{url_for('offeringDetail', offering_id = i.id)}}">
+                            <a href="{{url_for('offeringDetail', offering_id = i.offering_id)}}">
                                 {% if file.image is none %}
                                     <img src ="{{ url_for('static', filename="No_Image_Available.jpg") }}" class="img-responsive" style="width:100%" style="height:100%" alt="Image">
                                 {% else %}
@@ -59,9 +59,9 @@
         {% endfor %}
 
 
-
         </div>
     </div>
 </div>
+{% include "footer.html" %}
 </body>
 </html>
